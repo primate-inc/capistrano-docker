@@ -61,6 +61,7 @@ Next, optionally, specify the options in your `config/stage/deploy.rb` file, how
     set :docker_compose - should we use docker-compose strategy instead (note - all above options are obsolete using this option), using docker-compose requires you to have docker-compose.yml file in your root directory, defaults to false
     set :docker_compose_path -> allow specify the path to the docker-compose.yml (see pull #5), defaults to nil
     set :docker_compose_project_name - prefix for the container names, defaults to nil, so it defaults to the directory name the project is at
+    set :docker_compose_environment_file - use docker-compose environment file
     set :docker_compose_remove_after_stop - should we remove the containers after stopping them, defaults to true
     set :docker_compose_remove_volumes - should we remove associated volumes with containers during their removal (rm -v option), default: true
     set :docker_compose_build_services - specify services which should be built / ran with docker-compose (ex. docker-compose build web), default: none

@@ -5,6 +5,15 @@ def fetch(arg)
 end
 
 describe "compose.rake" do
+  describe "_compose_option_environment_file" do
+    subject { _compose_option_environment_file }
+    let(:options) { { docker_compose_environment_file: "test" } }
+
+    it "returns proper option" do
+      expect(subject).to eq "--env-file test"
+    end
+  end
+
   describe "_compose_option_project_name" do
     subject { _compose_option_project_name }
     let(:options) { { docker_compose_project_name: "test" } }
@@ -68,6 +77,7 @@ describe "compose.rake" do
   end
 
   describe "commands" do
+    let(:_compose_option_environment_file) { "--env-file env" }
     let(:_compose_option_project_name) { "-p project" }
     let(:_compose_option_compose_path) { "-f compose.yml" }
     let(:_compose_option_build_services) { "foo" }
@@ -76,7 +86,7 @@ describe "compose.rake" do
       subject { compose_start_command }
 
       it "returns command with proper options order" do
-        expect(subject).to eq "-f compose.yml -p project up -d foo"
+        expect(subject).to eq "--env-file env -f compose.yml -p project up -d foo"
       end
     end
 
@@ -84,7 +94,7 @@ describe "compose.rake" do
       subject { compose_build_command }
 
       it "returns command with proper options order" do
-        expect(subject).to eq "-f compose.yml -p project build foo"
+        expect(subject).to eq "--env-file env -f compose.yml -p project build foo"
       end
     end
 
@@ -92,7 +102,7 @@ describe "compose.rake" do
       subject { compose_stop_command }
 
       it "returns command with proper options order" do
-        expect(subject).to eq "-f compose.yml -p project stop"
+        expect(subject).to eq "--env-file env -f compose.yml -p project stop"
       end
     end
 
@@ -103,14 +113,14 @@ describe "compose.rake" do
         let(:options) { { docker_compose_remove_volumes: true } }
 
         it "returns command with proper options order" do
-          expect(subject).to eq "-f compose.yml -p project rm -f -v"
+          expect(subject).to eq "--env-file env -f compose.yml -p project rm -f -v"
         end
       end
 
       describe "without removing volumes" do
         let(:options) { { docker_compose_remove_volumes: nil } }
         it "returns command with proper options order" do
-          expect(subject).to eq "-f compose.yml -p project rm -f"
+          expect(subject).to eq "--env-file env -f compose.yml -p project rm -f"
         end
       end
     end
@@ -119,7 +129,7 @@ describe "compose.rake" do
       subject { compose_down_command }
 
       it "returns command with proper options order" do
-        expect(subject).to eq "-f compose.yml -p project down"
+        expect(subject).to eq "--env-file env -f compose.yml -p project down"
       end
     end
 
@@ -130,7 +140,7 @@ describe "compose.rake" do
       subject { compose_run_command(service, cmd) }
 
       it "returns command with proper options order" do
-        expect(subject).to eq "-f compose.yml -p project run app rake"
+        expect(subject).to eq "--env-file env -f compose.yml -p project run app rake"
       end
     end
   end

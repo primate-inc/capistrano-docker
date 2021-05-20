@@ -70,6 +70,11 @@ namespace :docker do
     end
   end
 
+  def _compose_option_environment_file
+    opt = fetch(:docker_compose_environment_file)
+    opt.nil? ? "" : "--env-file #{opt}"
+  end
+
   def _compose_option_project_name
     opt = fetch(:docker_compose_project_name)
     opt.nil? ? "" : "-p #{opt}"
@@ -90,6 +95,7 @@ namespace :docker do
     cmd << _compose_option_build_services
     cmd.unshift _compose_option_project_name
     cmd.unshift _compose_option_compose_path
+    cmd.unshift _compose_option_environment_file
 
     cmd.join(" ")
   end
@@ -99,6 +105,7 @@ namespace :docker do
     cmd << _compose_option_build_services
     cmd.unshift _compose_option_project_name
     cmd.unshift _compose_option_compose_path
+    cmd.unshift _compose_option_environment_file
 
     cmd.join(" ")
   end
@@ -107,6 +114,7 @@ namespace :docker do
     cmd = ["stop"]
     cmd.unshift _compose_option_project_name
     cmd.unshift _compose_option_compose_path
+    cmd.unshift _compose_option_environment_file
     cmd.join(" ")
   end
 
@@ -114,6 +122,7 @@ namespace :docker do
     cmd = ["rm"]
     cmd.unshift _compose_option_project_name
     cmd.unshift _compose_option_compose_path
+    cmd.unshift _compose_option_environment_file
     cmd << "-f"
     cmd << "-v" if fetch(:docker_compose_remove_volumes) == true
 
@@ -124,6 +133,7 @@ namespace :docker do
     cmd = ["down"]
     cmd.unshift _compose_option_project_name
     cmd.unshift _compose_option_compose_path
+    cmd.unshift _compose_option_environment_file
     cmd.join(" ")
   end
 
@@ -131,6 +141,7 @@ namespace :docker do
     cmd = ["run"]
     cmd.unshift _compose_option_project_name
     cmd.unshift _compose_option_compose_path
+    cmd.unshift _compose_option_environment_file
 
     cmd << service
     cmd << command
