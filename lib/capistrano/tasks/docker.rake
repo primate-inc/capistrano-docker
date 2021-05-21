@@ -86,6 +86,10 @@ namespace :load do
     set :docker_compose_remove_after_stop,  -> { true }
     set :docker_compose_remove_volumes,     -> { true }
     set :docker_compose_build_services,     -> { nil }
+    set :docker_compose_assets_db_migrate_container, -> { nil }
+    set :docker_compose_assets_db_migrate_command, -> { 'bin/rails db:migrate' }
+    set :docker_compose_assets_build_container, -> { nil }
+    set :docker_compose_assets_precompile_command, -> { 'bin/rails assets:precompile' }
 
     # assets
     set :docker_assets_precompile_command, -> { "rake assets:precompile" }
