@@ -65,6 +65,11 @@ Next, optionally, specify the options in your `config/stage/deploy.rb` file, how
     set :docker_compose_remove_after_stop - should we remove the containers after stopping them, defaults to true
     set :docker_compose_remove_volumes - should we remove associated volumes with containers during their removal (rm -v option), default: true
     set :docker_compose_build_services - specify services which should be built / ran with docker-compose (ex. docker-compose build web), default: none
+    set :docker_compose_db_migrate_container - specify which container migration should run on (usually your main app container)
+    set :docker_compose_db_migrate_command - specify database migration command defaults to `bin/rails db:migrate`
+    set :docker_compose_assets_precompile_container - specify which container asset precompile should run on (usually your main app container)
+    set :docker_compose_assets_precompile_command -specify asset precompilation command defaults to `bin/rails assets:precompile`
+
     set :docker_pass_env - the list of the environment variables that should be passed over to the docker-compose commands from command line (they are validated wether they exists before they are used) (ex: PULL_REQUEST_ID=10 cap staging docker:compose:start )
     set :docker_assets_precompile_command - command to be executed as assets precompile task (when capistrano/docker/assets is used, defaults to 'rake assets:precompile')
     set :docker_migrate_command - command to be executed as migration task (when capistrano/docker/migration is used, defaults to 'rake db:migrate')
