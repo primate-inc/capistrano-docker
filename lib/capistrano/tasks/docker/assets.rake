@@ -7,8 +7,8 @@ namespace :docker do
     end
   end
   namespace :compose do
-    namespace :db do
-      task :migrate do
+    namespace :assets do
+      task :precompile do
         on roles(fetch(:docker_role)) do
           execute :"docker-compose", compose_run_command(fetch(:docker_compose_assets_precompile_container), fetch(:docker_compose_assets_precompile_command))
         end
